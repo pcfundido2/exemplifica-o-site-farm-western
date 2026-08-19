@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farm Western — Moda com raiz e estrada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --leather:#3B2A1E;
+    --leather-dark:#2A1D14;
+    --cream:#F4EBDA;
+    --cream-2:#EDE1C9;
+    --rust:#B0502B;
+    --rust-dark:#8C3E20;
+    --gold:#C69A2E;
+    --charcoal:#2B2118;
+    --ink-soft:#5A4C3E;
+    --line:#D9C7A3;
+    --white:#FFFCF6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--charcoal);
+    font-family:'Work Sans',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-0.01em;}
+  .eyebrow{
+    font-size:12.5px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--rust);font-weight:600;
+  }
+  .rye{font-family:'Rye',serif;font-weight:400;}
+
+  /* ---------- Texture helpers ---------- */
+  .stitch-border{
+    border:2px dashed rgba(198,154,46,0.55);
+    border-radius:2px;
+  }
+  .grain{
+    position:relative;
+  }
+  .grain::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:3px 3px;
+    mix-blend-mode:overlay;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:var(--leather);
+    border-bottom:3px solid var(--gold);
+  }
+  .header-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;max-width:1180px;margin:0 auto;
+  }
+  .logo{
+    font-family:'Rye',serif;color:var(--cream);font-size:24px;
+    letter-spacing:0.01em;display:flex;align-items:center;gap:10px;
+  }
+  .logo svg{flex-shrink:0;}
+  nav.main-nav{display:flex;gap:34px;}
+  nav.main-nav a{
+    color:var(--cream-2);font-size:14px;font-weight:500;letter-spacing:0.03em;
+    text-transform:uppercase;position:relative;padding:4px 0;
+    transition:color .2s;
+  }
+  nav.main-nav a::after{
+    content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--gold);
+    transition:width .25s;
+  }
+  nav.main-nav a:hover{color:var(--white);}
+  nav.main-nav a:hover::after{width:100%;}
+  .header-actions{display:flex;align-items:center;gap:18px;}
+  .icon-btn{
+    background:none;border:none;color:var(--cream);cursor:pointer;
+    position:relative;display:flex;align-items:center;justify-content:center;
+    width:38px;height:38px;
+  }
+  .icon-btn svg{width:21px;height:21px;}
+  .cart-count{
+    position:absolute;top:-2px;right:-2px;background:var(--rust);color:var(--white);
+    font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;border:1.5px solid var(--leather);
+  }
+  .burger{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:linear-gradient(180deg,var(--leather) 0%,var(--leather-dark) 100%);
+    color:var(--cream);
+    position:relative;
+    padding:86px 0 110px;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:3px 3px;
+    pointer-events:none;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;
+    position:relative;z-index:2;
+  }
+  .hero .eyebrow{color:var(--gold);}
+  .hero h1{
+    font-family:'Rye',serif;font-weight:400;
+    font-size:clamp(40px,6vw,72px);line-height:1.02;margin:18px 0 22px;
+    color:var(--cream);
+  }
+  .hero h1 span{color:var(--rust);}
+  .hero p.lead{
+    font-size:17px;line-height:1.65;color:var(--cream-2);max-width:460px;margin-bottom:34px;
+  }
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 28px;font-size:14px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
+    border-radius:3px;transition:transform .18s ease, background .2s ease;
+  }
+  .btn-primary{background:var(--rust);color:var(--white);}
+  .btn-primary:hover{background:var(--rust-dark);transform:translateY(-2px);}
+  .btn-outline{border:1.5px solid var(--cream-2);color:var(--cream);}
+  .btn-outline:hover{background:rgba(244,235,218,0.08);transform:translateY(-2px);}
+  .btn-dark{background:var(--charcoal);color:var(--cream);}
+  .btn-dark:hover{background:#1c150e;transform:translateY(-2px);}
+
+  .hero-badge{
+    position:relative;justify-self:end;width:100%;max-width:320px;aspect-ratio:1/1.05;
+  }
+  .lasso-ring{
+    position:absolute;inset:0;border:2px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    animation:spin 40s linear infinite;
+  }
+  .lasso-ring svg{width:88%;height:88%;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .hero-badge-center{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+  }
+  .hero-badge-center .num{font-family:'Fraunces',serif;font-size:44px;color:var(--gold);font-weight:600;}
+  .hero-badge-center .cap{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--cream-2);margin-top:4px;}
+
+  /* ---------- Marquee strip ---------- */
+  .marquee-strip{
+    background:var(--gold);color:var(--charcoal);
+    padding:11px 0;overflow:hidden;white-space:nowrap;
+    border-bottom:2px solid var(--rust-dark);
+  }
+  .marquee-track{
+    display:inline-flex;gap:44px;animation:scroll-left 26s linear infinite;
+    font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  }
+  .marquee-track span{display:inline-flex;align-items:center;gap:10px;}
+  @keyframes scroll-left{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- Category chips ---------- */
+  .cats{padding:56px 0 20px;}
+  .cats-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:10px;}
+  .cats-head h2{font-size:30px;}
+  .chip-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
+  .chip-row::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:0 0 auto;padding:11px 20px;border:1.5px solid var(--line);border-radius:30px;
+    font-size:13.5px;font-weight:600;color:var(--ink-soft);background:var(--white);
+    transition:.2s;white-space:nowrap;
+  }
+  .chip.active,.chip:hover{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal);}
+
+  /* ---------- Products ---------- */
+  .products{padding:40px 0 30px;}
+  .grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:10px;
+  }
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+    position:relative;
+    transition:transform .25s ease, box-shadow .25s ease;
+    display:flex;flex-direction:column;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:0 16px 30px -14px rgba(43,33,24,0.35);}
+  .card-tag-hole{
+    position:absolute;top:14px;left:14px;width:14px;height:14px;border-radius:50%;
+    background:var(--cream);border:1.5px solid var(--line);z-index:3;
+  }
+  .card-media{
+    aspect-ratio:4/3.1;background:var(--cream-2);position:relative;
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:2px dashed var(--line);
+  }
+  .card-media svg{width:58%;height:58%;color:var(--rust);}
+  .card-badge{
+    position:absolute;top:12px;right:12px;background:var(--rust);color:var(--white);
+    font-size:10.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+    padding:5px 10px;border-radius:20px;
+  }
+  .card-body{padding:18px 18px 20px;flex:1;display:flex;flex-direction:column;}
+  .card-cat{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--rust);font-weight:700;margin-bottom:6px;}
+  .card-name{font-family:'Fraunces',serif;font-size:18.5px;font-weight:600;margin-bottom:6px;line-height:1.25;}
+  .card-desc{font-size:13px;color:var(--ink-soft);line-height:1.5;margin-bottom:16px;flex:1;}
+  .card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;}
+  .card-price{font-family:'Fraunces',serif;font-size:19px;font-weight:600;}
+  .card-price small{font-size:12px;color:var(--ink-soft);font-weight:400;display:block;text-decoration:line-through;}
+  .add-btn{
+    display:flex;align-items:center;gap:7px;background:var(--charcoal);color:var(--cream);
+    padding:10px 16px;border-radius:3px;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
+    transition:.2s;
+  }
+  .add-btn:hover{background:var(--rust);}
+  .add-btn svg{width:15px;height:15px;}
+
+  .products-more{text-align:center;margin-top:44px;}
+
+  /* ---------- Divider signature ---------- */
+  .rope-divider{padding:50px 0;display:flex;align-items:center;gap:18px;}
+  .rope-divider svg{flex:1;height:14px;width:100%;color:var(--rust);}
+  .rope-divider .rope-mark{
+    font-family:'Rye',serif;font-size:22px;color:var(--rust);flex-shrink:0;
+  }
+
+  /* ---------- About split ---------- */
+  .about{background:var(--leather);color:var(--cream);padding:90px 0;}
+  .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:60px;align-items:center;}
+  .about-visual{
+    aspect-ratio:1/1;border:2px solid var(--gold);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;position:relative;
+    background:var(--leather-dark);
+  }
+  .about-visual svg{width:60%;height:60%;color:var(--gold);}
+  .about .eyebrow{color:var(--gold);}
+  .about h2{font-size:clamp(28px,3.4vw,40px);margin:16px 0 22px;line-height:1.15;color:var(--white);}
+  .about p{font-size:15.5px;line-height:1.75;color:var(--cream-2);margin-bottom:16px;max-width:520px;}
+  .about-stats{display:flex;gap:40px;margin-top:34px;flex-wrap:wrap;}
+  .about-stats div strong{display:block;font-family:'Fraunces',serif;font-size:30px;color:var(--gold);}
+  .about-stats div span{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--cream-2);}
+
+  /* ---------- Values ---------- */
+  .values{padding:80px 0;}
+  .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .value-card{padding:30px 26px;border:1px solid var(--line);border-radius:6px;background:var(--white);}
+  .value-card svg{width:30px;height:30px;color:var(--rust);margin-bottom:16px;}
+  .value-card h3{font-size:18px;margin-bottom:8px;}
+  .value-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
+
+  /* ---------- Newsletter ---------- */
+  .newsletter{
+    background:var(--rust);color:var(--white);padding:56px 0;
+  }
+  .newsletter-inner{display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;}
+  .newsletter h3{font-size:24px;font-family:'Fraunces',serif;margin-bottom:6px;}
+  .newsletter p{font-size:13.5px;color:rgba(255,255,255,0.85);}
+  .newsletter form{display:flex;gap:10px;flex-wrap:wrap;}
+  .newsletter input{
+    padding:13px 16px;border-radius:3px;border:none;font-size:14px;min-width:240px;
+    font-family:'Work Sans',sans-serif;
+  }
+  .newsletter button{
+    background:var(--charcoal);color:var(--cream);padding:13px 24px;border-radius:3px;
+    font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.04em;
+  }
+  .newsletter button:hover{background:var(--leather-dark);}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--leather-dark);color:var(--cream-2);padding:64px 0 26px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;margin-bottom:46px;}
+  .footer-logo{font-family:'Rye',serif;color:var(--cream);font-size:22px;margin-bottom:14px;display:block;}
+  .footer-grid p{font-size:13.5px;line-height:1.7;color:var(--cream-2);max-width:280px;}
+  .footer-col h4{font-size:12.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px;}
+  .footer-col a{display:block;font-size:13.5px;color:var(--cream-2);margin-bottom:11px;transition:.2s;}
+  .footer-col a:hover{color:var(--white);}
+  .footer-bottom{
+    border-top:1px solid rgba(244,235,218,0.15);padding-top:22px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:12px;color:rgba(244,235,218,0.55);
+  }
+
+  /* ---------- Cart drawer ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(20,14,9,0.55);z-index:90;
+    opacity:0;pointer-events:none;transition:opacity .3s;
+  }
+  .overlay.open{opacity:1;pointer-events:auto;}
+  .drawer{
+    position:fixed;top:0;right:0;height:100%;width:400px;max-width:92vw;
+    background:var(--cream);z-index:95;box-shadow:-10px 0 30px rgba(0,0,0,0.25);
+    transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column;
+  }
+  .drawer.open{transform:translateX(0);}
+  .drawer-head{
+    padding:22px 24px;background:var(--leather);color:var(--cream);
+    display:flex;align-items:center;justify-content:space-between;
+    border-bottom:3px solid var(--gold);
+  }
+  .drawer-head h3{font-family:'Fraunces',serif;font-size:19px;}
+  .drawer-close{color:var(--cream);width:30px;height:30px;display:flex;align-items:center;justify-content:center;}
+  .drawer-close svg{width:19px;height:19px;}
+  .drawer-items{flex:1;overflow-y:auto;padding:20px 24px;}
+  .drawer-empty{text-align:center;padding:60px 10px;color:var(--ink-soft);}
+  .drawer-empty svg{width:44px;height:44px;color:var(--line);margin:0 auto 14px;}
+  .drawer-item{
+    display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);
+  }
+  .drawer-item-media{
+    width:64px;height:64px;background:var(--cream-2);border-radius:4px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .drawer-item-media svg{width:60%;height:60%;color:var(--rust);}
+  .drawer-item-info{flex:1;}
+  .drawer-item-info .name{font-size:14px;font-weight:600;margin-bottom:2px;}
+  .drawer-item-info .cat{font-size:11.5px;color:var(--ink-soft);margin-bottom:8px;}
+  .qty-row{display:flex;align-items:center;gap:10px;}
+  .qty-btn{
+    width:22px;height:22px;border:1px solid var(--line);border-radius:3px;
+    display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--charcoal);
+  }
+  .qty-btn:hover{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal);}
+  .qty-val{font-size:13px;font-weight:600;min-width:16px;text-align:center;}
+  .drawer-item-price{font-family:'Fraunces',serif;font-size:14.5px;font-weight:600;white-space:nowrap;}
+  .remove-btn{font-size:11px;color:var(--rust);text-decoration:underline;margin-top:8px;display:inline-block;}
+  .drawer-foot{padding:20px 24px 26px;border-top:1px solid var(--line);background:var(--white);}
+  .drawer-total-row{display:flex;justify-content:space-between;margin-bottom:16px;font-size:15px;}
+  .drawer-total-row strong{font-family:'Fraunces',serif;font-size:20px;}
+  .checkout-btn{
+    width:100%;background:var(--rust);color:var(--white);padding:15px;border-radius:3px;
+    font-weight:700;text-transform:uppercase;letter-spacing:0.05em;font-size:13.5px;
+  }
+  .checkout-btn:hover{background:var(--rust-dark);}
+
+  /* ---------- Toast ---------- */
+  .toast{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--charcoal);color:var(--cream);padding:14px 22px;border-radius:5px;
+    font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:10px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.3);z-index:110;opacity:0;pointer-events:none;
+    transition:opacity .25s, transform .25s;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast svg{width:16px;height:16px;color:var(--gold);}
+
+  /* ---------- Modal (checkout demo) ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(20,14,9,0.62);z-index:120;
+    display:flex;align-items:center;justify-content:center;padding:20px;
+    opacity:0;pointer-events:none;transition:opacity .25s;
+  }
+  .modal-overlay.open{opacity:1;pointer-events:auto;}
+  .modal-box{
+    background:var(--cream);border-radius:6px;max-width:400px;width:100%;
+    padding:36px 30px 30px;text-align:center;border:2px solid var(--gold);
+    transform:scale(0.92);transition:transform .25s;
+  }
+  .modal-overlay.open .modal-box{transform:scale(1);}
+  .modal-box svg{width:44px;height:44px;color:var(--rust);margin:0 auto 16px;}
+  .modal-box h3{font-family:'Fraunces',serif;font-size:21px;margin-bottom:10px;}
+  .modal-box p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:22px;}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:980px){
+    nav.main-nav{display:none;}
+    .burger{display:flex;}
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-badge{justify-self:center;margin-top:20px;max-width:220px;}
+    .about-grid{grid-template-columns:1fr;}
+    .about-visual{max-width:320px;margin:0 auto;order:-1;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:640px){
+    .wrap{padding:0 18px;}
+    .grid{grid-template-columns:1fr;}
+    .values-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:30px;}
+    .newsletter-inner{flex-direction:column;align-items:flex-start;}
+    .newsletter form{width:100%;}
+    .newsletter input{flex:1;}
+    .hero{padding:56px 0 70px;}
+    .drawer{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <svg width="30" height="30" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 20C8 20 10 10 24 10C38 10 40 20 40 20" stroke="#C69A2E" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M6 20H42V24C42 24 38 26 24 26C10 26 6 24 6 24V20Z" stroke="#C69A2E" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M24 26V38" stroke="#C69A2E" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="24" cy="41" r="2.4" stroke="#C69A2E" stroke-width="2"/>
+      </svg>
+      Farm Western
+    </a>
+    <nav class="main-nav">
+      <a href="#colecao">Coleção</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#valores">Valores</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Carrinho" onclick="openCart()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.6 7H6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="21" r="1.4"/><circle cx="18" cy="21" r="1.4"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero grain">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Coleção Poeira & Estrada — 2026</p>
+      <h1>Moda que nasce<br>no <span>curral</span>,<br>vive na cidade</h1>
+      <p class="lead">Couro de verdade, jeans reforçado e a atitude de quem não tem pressa. Peças feitas para quem trabalha na lida e não abre mão de estilo no fim do dia.</p>
+      <div class="hero-ctas">
+        <a href="#colecao" class="btn btn-primary">Ver coleção</a>
+        <a href="#sobre" class="btn btn-outline">Nossa história</a>
+      </div>
+    </div>
+    <div class="hero-badge">
+      <div class="lasso-ring">
+        <svg viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="46" stroke="#C69A2E" stroke-width="0.6" stroke-dasharray="2 4"/>
+        </svg>
+      </div>
+      <div class="hero-badge-center">
+        <span class="num">100%</span>
+        <span class="cap">Couro & algodão</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>★ Frete grátis acima de R$ 399</span>
+    <span>★ Couro genuíno certificado</span>
+    <span>★ Troca fácil em 30 dias</span>
+    <span>★ Feito à mão no interior</span>
+    <span>★ Frete grátis acima de R$ 399</span>
+    <span>★ Couro genuíno certificado</span>
+    <span>★ Troca fácil em 30 dias</span>
+    <span>★ Feito à mão no interior</span>
+  </div>
+</div>
+
+<!-- CATEGORIAS -->
+<section class="cats wrap" id="colecao">
+  <div class="cats-head">
+    <h2>Escolha sua trilha</h2>
+    <p style="font-size:13.5px;color:var(--ink-soft);">Filtre por categoria e monte o look</p>
+  </div>
+  <div class="chip-row" id="chipRow">
+    <button class="chip active" data-cat="todos">Todos</button>
+    <button class="chip" data-cat="chapeus">Chapéus</button>
+    <button class="chip" data-cat="botas">Botas</button>
+    <button class="chip" data-cat="camisas">Camisas</button>
+    <button class="chip" data-cat="jaquetas">Jaquetas</button>
+    <button class="chip" data-cat="cintos">Cintos & Acessórios</button>
+    <button class="chip" data-cat="vestidos">Vestidos</button>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section class="products wrap">
+  <div class="grid" id="productGrid"></div>
+  <div class="products-more">
+    <button class="btn btn-dark" id="loadMoreBtn">Ver mais peças</button>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="rope-divider">
+    <svg viewBox="0 0 400 14" preserveAspectRatio="none"><path d="M0 7 Q10 0 20 7 T40 7 T60 7 T80 7 T100 7 T120 7 T140 7 T160 7 T180 7 T200 7 T220 7 T240 7 T260 7 T280 7 T300 7 T320 7 T340 7 T360 7 T380 7 T400 7" stroke="currentColor" stroke-width="1.4" fill="none" opacity="0.5"/></svg>
+    <span class="rope-mark">§</span>
+    <svg viewBox="0 0 400 14" preserveAspectRatio="none"><path d="M0 7 Q10 0 20 7 T40 7 T60 7 T80 7 T100 7 T120 7 T140 7 T160 7 T180 7 T200 7 T220 7 T240 7 T260 7 T280 7 T300 7 T320 7 T340 7 T360 7 T380 7 T400 7" stroke="currentColor" stroke-width="1.4" fill="none" opacity="0.5"/></svg>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section class="about" id="sobre">
+  <div class="wrap about-grid">
+    <div class="about-visual">
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M10 26C10 26 13 14 32 14C51 14 54 26 54 26" stroke-linecap="round"/>
+        <path d="M7 26H57V31C57 31 50 34 32 34C14 34 7 31 7 31V26Z" stroke-linejoin="round"/>
+        <path d="M32 34V54" stroke-linecap="round"/>
+        <circle cx="32" cy="58" r="3"/>
+      </svg>
+    </div>
+    <div>
+      <p class="eyebrow">Desde a primeira agulha</p>
+      <h2>Cada costura carrega uma história do interior</h2>
+      <p>A Farm Western nasceu numa oficina de selaria, quando percebemos que o mesmo cuidado dado a uma sela também cabia numa jaqueta ou num par de botas. Hoje seguimos o mesmo processo: couro curtido devagar, jeans que aguenta a lida e um corte que respeita quem usa.</p>
+      <p>Não vendemos fantasia de cowboy. Vendemos peça de trabalho que também serve pra sair — porque no interior, a vida não separa as duas coisas.</p>
+      <div class="about-stats">
+        <div><strong>18</strong><span>Anos de oficina</span></div>
+        <div><strong>420+</strong><span>Peças na coleção</span></div>
+        <div><strong>32</strong><span>Artesãos parceiros</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section class="values wrap" id="valores">
+  <div class="cats-head">
+    <h2>Por que vestir Farm Western</h2>
+  </div>
+  <div class="values-grid">
+    <div class="value-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2 3 6v6c0 5 4 8.5 9 10 5-1.5 9-5 9-10V6l-9-4Z" stroke-linejoin="round"/></svg>
+      <h3>Couro de verdade</h3>
+      <p>Curtimento vegetal, sem atalho. Cada lote é testado antes de virar bota, cinto ou jaqueta.</p>
+    </div>
+    <div class="value-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12a8 8 0 1 0 16 0 8 8 0 1 0-16 0Z"/><path d="M12 8v4l3 2" stroke-linecap="round"/></svg>
+      <h3>Feito pra durar</h3>
+      <p>Reforço duplo nas costuras e tecidos que aguentam sol, chuva e um dia inteiro de lida.</p>
+    </div>
+    <div class="value-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12h4l3 8 4-16 3 8h4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3>Origem rastreável</h3>
+      <p>Cada peça carrega a etiqueta da oficina que a fez. Você sabe exatamente de onde ela veio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter" id="contato">
+  <div class="wrap newsletter-inner">
+    <div>
+      <h3>Receba a próxima remessa em primeira mão</h3>
+      <p>Sem spam — só aviso quando peça nova chega na oficina.</p>
+    </div>
+    <form onsubmit="return handleNewsletter(event)">
+      <input type="email" placeholder="seuemail@exemplo.com" required>
+      <button type="submit">Quero receber</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <span class="footer-logo">Farm Western</span>
+        <p>Moda country com raiz no couro e alma na estrada. Uma loja demonstrativa criada para mostrar como ficaria a Farm Western na prática.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Coleção</h4>
+        <a href="#colecao">Chapéus</a>
+        <a href="#colecao">Botas</a>
+        <a href="#colecao">Camisas</a>
+        <a href="#colecao">Jaquetas</a>
+      </div>
+      <div class="footer-col">
+        <h4>Loja</h4>
+        <a href="#sobre">Nossa história</a>
+        <a href="#valores">Valores</a>
+        <a href="#contato">Contato</a>
+        <a href="#">Trocas e devoluções</a>
+      </div>
+      <div class="footer-col">
+        <h4>Siga a trilha</h4>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Farm Western. Site demonstrativo — nenhuma compra real é processada.</span>
+      <span>Feito com couro, linha e café</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CARRINHO -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>Seu carrinho</h3>
+    <button class="drawer-close" onclick="closeCart()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot" id="drawerFoot">
+    <div class="drawer-total-row">
+      <span>Total</span>
+      <strong id="drawerTotal">R$ 0,00</strong>
+    </div>
+    <button class="checkout-btn" onclick="openCheckoutModal()">Finalizar pedido</button>
+  </div>
+</aside>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span id="toastText">Item adicionado ao carrinho</span>
+</div>
+
+<!-- MODAL CHECKOUT -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeCheckoutModal()">
+  <div class="modal-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 3 6v6c0 5 4 8.5 9 10 5-1.5 9-5 9-10V6l-9-4Z" stroke-linejoin="round"/></svg>
+    <h3>Isso aqui é só uma vitrine 🤠</h3>
+    <p>Este site é um demonstrativo visual da Farm Western. Nenhum pagamento é processado de verdade — mas o carrinho, os filtros e a navegação funcionam como numa loja real.</p>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="closeCheckoutModal()">Entendi, continuar vendo</button>
+  </div>
+</div>
+
+<script>
+  // ---------- Ícones de produto (linha, monocromáticos) ----------
+  const icons = {
+    chapeu: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 34C10 34 14 20 32 20C50 20 54 34 54 34" stroke-linecap="round"/><path d="M6 34H58V39C58 39 50 42 32 42C14 42 6 39 6 39V34Z" stroke-linejoin="round"/><ellipse cx="32" cy="20" rx="9" ry="6"/></svg>`,
+    bota: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 8h14v24l12 10c3 2.4 3 8-2 8H14c-4 0-5-3-5-6v-6c0-3 2-5 5-6l8-4V8Z" stroke-linejoin="round" stroke-linecap="round"/><path d="M22 20h14M22 28h14" stroke-linecap="round"/></svg>`,
+    camisa: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 8 12 16v10l6-2v28h28V24l6 2V16L42 8l-4 4h-12l-4-4Z" stroke-linejoin="round" stroke-linecap="round"/><path d="M32 12v8" stroke-linecap="round"/></svg>`,
+    jaqueta: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M24 8 14 15v13l6-2v28h24V26l6 2V15L40 8l-4 5h-8l-4-5Z" stroke-linejoin="round" stroke-linecap="round"/><path d="M32 13v10M24 30v22M40 30v22" stroke-linecap="round"/></svg>`,
+    cinto: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="26" width="52" height="12" rx="2"/><circle cx="32" cy="32" r="6"/><path d="M6 30h6M52 30h6" stroke-linecap="round"/></svg>`,
+    vestido: `<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M26 8h12l4 10-6-2v6l10 26H18l10-26v-6l-6 2 4-10Z" stroke-linejoin="round" stroke-linecap="round"/></svg>`
+  };
+
+  // ---------- Catálogo ----------
+  const products = [
+    {id:1,cat:'chapeus',icon:'chapeu',name:'Chapéu Sertão Alto',desc:'Feltro australiano, aba curvada e cordão de couro trançado.',price:289.9,old:349.9,badge:'Novo'},
+    {id:2,cat:'botas',icon:'bota',name:'Bota Cascavel Marrom',desc:'Couro legítimo, solado costurado à mão e bico texano.',price:459.9,old:null,badge:null},
+    {id:3,cat:'camisas',icon:'camisa',name:'Camisa Xadrez Poeira',desc:'Flanela 100% algodão com botões de madrepérola.',price:139.9,old:179.9,badge:'-22%'},
+    {id:4,cat:'jaquetas',icon:'jaqueta',name:'Jaqueta Trilheiro',desc:'Couro macio com forro térmico, ideal pra madrugada fria.',price:589.9,old:null,badge:'Destaque'},
+    {id:5,cat:'cintos',icon:'cinto',name:'Cinto Fivela Estrela',desc:'Couro de 4mm com fivela em metal envelhecido.',price:99.9,old:null,badge:null},
+    {id:6,cat:'vestidos',icon:'vestido',name:'Vestido Rodeio Terra',desc:'Algodão leve com bordado floral e cinto de couro.',price:219.9,old:259.9,badge:'-15%'},
+    {id:7,cat:'chapeus',icon:'chapeu',name:'Chapéu Vaquejada Bege',desc:'Palha natural trançada, leve e ventilado para o verão.',price:159.9,old:null,badge:null},
+    {id:8,cat:'botas',icon:'bota',name:'Bota Curral Preta',desc:'Cano curto, resistente à lama e fácil de calçar.',price:379.9,old:null,badge:null},
+    {id:9,cat:'camisas',icon:'camisa',name:'Camisa Jeans Estrada',desc:'Jeans lavado com bolsos duplos e acabamento western.',price:169.9,old:null,badge:'Novo'},
+    {id:10,cat:'jaquetas',icon:'jaqueta',name:'Colete Peão',desc:'Sarja resinada com forro xadrez, ideal para camadas.',price:249.9,old:299.9,badge:'-17%'},
+    {id:11,cat:'cintos',icon:'cinto',name:'Chapéu de Palha Clássico',desc:'Trançado artesanal com faixa em couro cru.',price:129.9,old:null,badge:null},
+    {id:12,cat:'vestidos',icon:'vestido',name:'Vestido Longo Pradaria',desc:'Viscose fluida com estampa floral country.',price:249.9,old:null,badge:null},
+  ];
+
+  const catLabels = {chapeus:'Chapéus',botas:'Botas',camisas:'Camisas',jaquetas:'Jaquetas',cintos:'Cintos & Acessórios',vestidos:'Vestidos'};
+
+  let currentCat = 'todos';
+  let visibleCount = 6;
+  let cart = [];
+
+  const money = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+  function renderGrid(){
+    const grid = document.getElementById('productGrid');
+    const filtered = products.filter(p => currentCat==='todos' || p.cat===currentCat);
+    const toShow = filtered.slice(0, visibleCount);
+    grid.innerHTML = toShow.map(p => `
+      <div class="card">
+        <div class="card-tag-hole"></div>
+        <div class="card-media">
+          ${p.badge ? `<span class="card-badge">${p.badge}</span>`:''}
+          ${icons[p.icon]}
+        </div>
+        <div class="card-body">
+          <div class="card-cat">${catLabels[p.cat]}</div>
+          <div class="card-name">${p.name}</div>
+          <div class="card-desc">${p.desc}</div>
+          <div class="card-footer">
+            <div class="card-price">
+              ${money(p.price)}
+              ${p.old ? `<small>${money(p.old)}</small>`:''}
+            </div>
+            <button class="add-btn" onclick="addToCart(${p.id})">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+              Adicionar
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    document.getElementById('loadMoreBtn').style.display = (visibleCount >= filtered.length) ? 'none' : 'inline-flex';
+  }
+
+  document.getElementById('chipRow').addEventListener('click', e=>{
+    const chip = e.target.closest('.chip');
+    if(!chip) return;
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    currentCat = chip.dataset.cat;
+    visibleCount = 6;
+    renderGrid();
+  });
+
+  document.getElementById('loadMoreBtn').addEventListener('click', ()=>{
+    visibleCount += 6;
+    renderGrid();
+  });
+
+  // ---------- Carrinho ----------
+  function addToCart(id){
+    const product = products.find(p=>p.id===id);
+    const existing = cart.find(i=>i.id===id);
+    if(existing){ existing.qty++; } else { cart.push({...product, qty:1}); }
+    updateCartUI();
+    showToast(`${product.name} adicionado ao carrinho`);
+  }
+
+  function changeQty(id, delta){
+    const item = cart.find(i=>i.id===id);
+    if(!item) return;
+    item.qty += delta;
+    if(item.qty <= 0){ cart = cart.filter(i=>i.id!==id); }
+    updateCartUI();
+  }
+
+  function removeItem(id){
+    cart = cart.filter(i=>i.id!==id);
+    updateCartUI();
+  }
+
+  function updateCartUI(){
+    const count = cart.reduce((s,i)=>s+i.qty,0);
+    document.getElementById('cartCount').textContent = count;
+    const itemsWrap = document.getElementById('drawerItems');
+    if(cart.length===0){
+      itemsWrap.innerHTML = `
+        <div class="drawer-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.6 7H6"/></svg>
+          <p>Seu carrinho está vazio.<br>Volte à coleção e escolha sua próxima peça.</p>
+        </div>`;
+    } else {
+      itemsWrap.innerHTML = cart.map(i => `
+        <div class="drawer-item">
+          <div class="drawer-item-media">${icons[i.icon]}</div>
+          <div class="drawer-item-info">
+            <div class="name">${i.name}</div>
+            <div class="cat">${catLabels[i.cat]}</div>
+            <div class="qty-row">
+              <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+              <span class="qty-val">${i.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+            </div>
+            <span class="remove-btn" onclick="removeItem(${i.id})">Remover</span>
+          </div>
+          <div class="drawer-item-price">${money(i.price*i.qty)}</div>
+        </div>
+      `).join('');
+    }
+    const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    document.getElementById('drawerTotal').textContent = money(total);
+  }
+
+  function openCart(){
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('overlay').classList.add('open');
+  }
+  function closeCart(){
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+  }
+
+  let toastTimer;
+  function showToast(text){
+    const toast = document.getElementById('toast');
+    document.getElementById('toastText').textContent = text;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove('show'), 2600);
+  }
+
+  function openCheckoutModal(){
+    if(cart.length===0){ showToast('Adicione uma peça antes de finalizar'); return; }
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+  function closeCheckoutModal(){
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+
+  function handleNewsletter(e){
+    e.preventDefault();
+    showToast('E-mail cadastrado — fica de olho na próxima remessa!');
+    e.target.reset();
+    return false;
+  }
+
+  renderGrid();
+  updateCartUI();
+</script>
+</body>
+</html>
